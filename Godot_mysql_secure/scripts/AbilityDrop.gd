@@ -42,3 +42,4 @@ func _on_AbilityDrop_body_entered(body):
 	if body.name == "Player1" or "Player2":
 		body.ability(type)
 		queue_free()
+

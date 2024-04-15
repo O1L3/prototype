@@ -14,6 +14,8 @@ export(String) var shot
 export(String) var color
 export(int) var pNum
 
+onready var level := get_tree().root.get_node("Level")
+
 const bulletpath = preload("res://scenes/Bullet.tscn")
 const bigbulletpath = preload("res://scenes/BigBullet.tscn")
 
@@ -50,6 +52,7 @@ func update_health(health):
 	healthbar.value = health
 
 func dead():
+	level.saveScore()
 	get_tree().change_scene("res://scenes/GameOver.tscn")
 
 func shoot():

@@ -1,4 +1,7 @@
 extends Node2D
+
+onready var ui  = get_node("/root/Level/CanvasLayer/UI")
+
 const enemypath = preload("res://scenes/Enemy.tscn")
 var score = 0
 var waitWave1 = [2.0, 4.0]
@@ -14,14 +17,19 @@ func _ready():
 	$SpawnPosition.position.x = rngSpawn.randf_range(0.0,700.0)
 	$EnemyTimer.wait_time = rng.randf_range(2.0, 3.0)
 	$EnemyTimer.start()
+	ui.scoreVisible(true)
 
 func _process(delta):
 	$Player1.shipColor(colorState.color1)
 	$Player2.shipColor(colorState.color2)
 
+func saveScore():
+	if score > colorState.highscore:
+		colorState.highscoreUpdate(score)
+
 func scoreUpdate(scorePlus):
 	score += scorePlus
-	print(score)
+	ui.setScore(score)
 
 func shipColorChoice(color):
 	
@@ -54,6 +62,6 @@ func _on_EnemyTimer_timeout():
 
 
 func _on_ScoreTimer_timeout():
-	score+=1
+	scoreUpdate(1)
 	$ScoreTimer.start()
 

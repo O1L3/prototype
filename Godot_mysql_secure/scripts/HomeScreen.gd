@@ -1,6 +1,7 @@
 extends CanvasLayer
 
-
+func _ready():
+	$Control._get_player()
 
 
 func _on_Play_pressed():

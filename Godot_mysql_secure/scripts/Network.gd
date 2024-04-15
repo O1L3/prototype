@@ -1,5 +1,5 @@
 extends Control
-
+var start = false
 
 # Declare member variables here. Examples:
 var http_request : HTTPRequest = HTTPRequest.new()
@@ -96,22 +96,25 @@ func _http_request_completed(_result, _response_code, _headers, _body):
 	#$TextEdit.set_text(response_body)
 
 	if response['response']['size'] > 0:
-		$TextEdit.set_text("")
 		for n in (response['response']['size']):
-			$TextEdit.set_text($TextEdit.get_text() + String(response['response'][String(n)]['player_name']) + "\t\t" + String(response['response'][String(n)]['score']) + "\n")
-	else:	
-		$TextEdit.set_text("No data")
-	
-	
+			if start:
+				var highscores = int(String(response['response'][String(n)]['score']))
+				var Name = str(String(response['response'][String(n)]['player_name']))
+				colorState.highscoreUpdate(highscores)
+				colorState.playerNameUpdate(Name)
+			else:
+				$TextEdit.set_text($TextEdit.get_text() + String(response['response'][String(n)]['player_name']) + "\t\t" + String(response['response'][String(n)]['score']) + "\n")
 
-	
-func _submit_score():
-	var user_name = $PlayerName.get_text()
-	var score = $Score.get_text()
+
+
+func _add_score():
+	start = false
+	var user_name = colorState.playerName
+	var score = colorState.highscore
 	var command = "add_score"
 	var data = {"username" : user_name, "score" : score}
 	request_queue.push_back({"command" : command, "data" : data})
-	
+
 func _get_scores():
 	var command = "get_scores"
 	var data = {"score_ofset" : 0, "score_number" : 10}
@@ -119,10 +122,16 @@ func _get_scores():
 	print("get scores")
 
 func _get_player():
-	var user_id = $ID.get_text()
+	start = true
+	var user_id = 1
 	var command = "get_player"
 	var data = {"user_id" : user_id}
 	request_queue.push_back({"command" : command, "data" : data})
+
+
+
+func _on_Button_pressed():
+	get_tree().change_scene("res://scenes/HomeScreen.tscn")
 
 
 

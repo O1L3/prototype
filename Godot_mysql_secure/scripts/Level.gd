@@ -8,8 +8,12 @@ var Level3Score = 900
 var Level4 = false
 var Level4Score = 1800
 
+
 var bossSpawn = true
 var bossDead = true
+var spawn2 = true
+var spawn3 = true
+var spawn4 = true
 
 onready var ui  = get_node("/root/Level/CanvasLayer/UI")
 
@@ -38,7 +42,9 @@ func _process(delta):
 		Level1 = false
 		Level2 = true
 	if Level2:
-		spawnBoss()
+		if spawn2:
+			spawnBoss()
+			spawn2 = false
 		if bossDead:
 			waitWave1 = [1, 1.5]
 		else:
@@ -48,7 +54,9 @@ func _process(delta):
 		Level2 = false
 		Level3 = true
 	if Level3:
-		spawnBoss()
+		if spawn3:
+			spawnBoss()
+			spawn3 = false
 		if bossDead:
 			waitWave1 = [0.5, 1.0]
 		else:
@@ -58,8 +66,10 @@ func _process(delta):
 		Level3 = false
 		Level4 = true
 	if Level4:
-		spawnBoss()
-		$BossTimer.start()
+		if spawn4:
+			spawnBoss()
+			$BossTimer.start()
+			spawn4 = false
 		if bossDead:
 			waitWave1 = [0.5, 0.5]
 		else:
@@ -99,6 +109,7 @@ func spawnBoss():
 		add_child(boss)
 		boss.position = $bossSpawn.global_position 
 		bossSpawn = false
+		bossDead = false
 
 func enemyDead():
 	enemyCount -= 1
@@ -125,3 +136,4 @@ func _on_ScoreTimer_timeout():
 func _on_BossTimer_timeout():
 	bossSpawn = true
 	spawnBoss()
+	$BossTimer.start()

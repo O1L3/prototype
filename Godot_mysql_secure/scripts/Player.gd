@@ -81,6 +81,8 @@ func ability(type):
 		doubleShot = false
 		bigShot = true
 		$AbilityTimer2.start()
+	if type == "heal":
+		health += 25
 
 
 

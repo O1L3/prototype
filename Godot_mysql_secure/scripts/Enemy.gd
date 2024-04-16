@@ -18,7 +18,7 @@ var targetX : float = position.x + moveDist
 
 var rng = RandomNumberGenerator.new()
 var randomNum = rng.randf_range(0.0,1.0)
-var ranomChance = 0.25
+var ranomChance = 0.3
 
 onready var level := get_tree().root.get_node("Level")
 
@@ -66,7 +66,6 @@ func hit(damage):
 	health -= damage
 	$healthBar.visible = true
 	$healthBarBorder.visible = true
-	print("hit")
 	update_health(health)
 
 func update_health(health):

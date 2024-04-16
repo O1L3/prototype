@@ -4,17 +4,20 @@ var dir = 1
 
 var rng = RandomNumberGenerator.new()
 var randomNum = rng.randf_range(0.0,1.0)
-var randomChance = 0.5
+
 
 func _ready():
 	rng.randomize()
 	
 	randomNum = rng.randf_range(0.0,1.0)
-	if randomNum < randomChance:
+	if randomNum <= 0.33:
 		type = "doubleShot"
 		abilityType(type)
-	if randomNum > randomChance:
+	if randomNum > 0.33 and randomNum <= 0.66:
 		type = "bigShot"
+		abilityType(type)
+	if randomNum > 0.66:
+		type = "heal"
 		abilityType(type)
 
 func _process(delta):
@@ -33,6 +36,11 @@ func abilityType(type):
 		$Bigshot.visible = true
 	else:
 		$Bigshot.visible = false
+	
+	if type=="heal":
+		$Heal.visible = true
+	else:
+		$Heal.visible = false
 
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()

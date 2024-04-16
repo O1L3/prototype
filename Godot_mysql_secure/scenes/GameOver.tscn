@@ -1,29 +1,45 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/GameOver.gd" type="Script" id=1]
 [ext_resource path="res://scripts/Network.gd" type="Script" id=2]
+[ext_resource path="res://graphic/ButtonHome.png" type="Texture" id=3]
+[ext_resource path="res://graphic/ButtonRetry.png" type="Texture" id=4]
+[ext_resource path="res://graphic/ButtonHomeHover.png" type="Texture" id=5]
+[ext_resource path="res://graphic/ButtonRetryPressed.png" type="Texture" id=6]
+[ext_resource path="res://graphic/ButtonRetryHover.png" type="Texture" id=7]
+[ext_resource path="res://graphic/ButtonHomePressed.png" type="Texture" id=8]
 
 [node name="GameOver" type="CanvasLayer"]
 script = ExtResource( 1 )
 
-[node name="TryAgain" type="Button" parent="."]
-margin_left = 120.0
-margin_top = 520.0
-margin_right = 200.0
-margin_bottom = 600.0
-text = "Try Again"
+[node name="Home" type="TextureButton" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -240.0
+margin_top = -160.0
+margin_right = -80.0
+margin_bottom = -80.0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 8 )
+texture_hover = ExtResource( 5 )
 
-[node name="HomeScreen" type="Button" parent="."]
-margin_left = 280.0
-margin_top = 520.0
-margin_right = 360.0
-margin_bottom = 600.0
-text = "Home"
+[node name="Retry" type="TextureButton" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 80.0
+margin_top = -160.0
+margin_right = 240.0
+margin_bottom = -80.0
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 7 )
 
 [node name="Control" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 2 )
 
-[connection signal="pressed" from="TryAgain" to="." method="_on_TryAgain_pressed"]
-[connection signal="pressed" from="HomeScreen" to="." method="_on_HomeScreen_pressed"]
+[connection signal="pressed" from="Home" to="." method="_on_Home_pressed"]
+[connection signal="pressed" from="Retry" to="." method="_on_Retry_pressed"]

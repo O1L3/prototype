@@ -1,8 +1,20 @@
 extends Node2D
 
+var Level1 = true
+var Level2 = false
+var Level2Score = 100
+var Level3 = false
+var Level3Score = 900
+var Level4 = false
+var Level4Score = 1800
+
+var bossSpawn = true
+var bossDead = true
+
 onready var ui  = get_node("/root/Level/CanvasLayer/UI")
 
 const enemypath = preload("res://scenes/Enemy.tscn")
+const bosspath = preload("res://scenes/boss.tscn")
 var score = 0
 var waitWave1 = [2.0, 4.0]
 
@@ -22,6 +34,36 @@ func _ready():
 func _process(delta):
 	$Player1.shipColor(colorState.color1)
 	$Player2.shipColor(colorState.color2)
+	if score >= Level2Score:
+		Level1 = false
+		Level2 = true
+	if Level2:
+		spawnBoss()
+		if bossDead:
+			waitWave1 = [1, 1.5]
+		else:
+			waitWave1 = [4.0, 5.0]
+	
+	if score >= Level3Score:
+		Level2 = false
+		Level3 = true
+	if Level3:
+		spawnBoss()
+		if bossDead:
+			waitWave1 = [0.5, 1.0]
+		else:
+			waitWave1 = [3.5, 4.0]
+	
+	if score >= Level4Score:
+		Level3 = false
+		Level4 = true
+	if Level4:
+		spawnBoss()
+		$BossTimer.start()
+		if bossDead:
+			waitWave1 = [0.5, 0.5]
+		else:
+			waitWave1 = [3.0, 3.0]
 
 func saveScore():
 	if score > colorState.highscore:
@@ -47,10 +89,23 @@ func spawnEnemy():
 	
 	add_child(enemy)
 	enemy.position = $SpawnPosition.global_position
-	print(enemy)
+	if Level2:
+		enemy.shootTime(2)
+
+
+func spawnBoss():
+	if bossSpawn:
+		var boss = bosspath.instance()
+		add_child(boss)
+		boss.position = $bossSpawn.global_position 
+		bossSpawn = false
 
 func enemyDead():
 	enemyCount -= 1
+
+func bossDead():
+	bossDead = true
+	bossSpawn = true
 
 func _on_EnemyTimer_timeout():
 	if enemyCount< maxEnemyCount:
@@ -65,3 +120,8 @@ func _on_ScoreTimer_timeout():
 	scoreUpdate(1)
 	$ScoreTimer.start()
 
+
+
+func _on_BossTimer_timeout():
+	bossSpawn = true
+	spawnBoss()

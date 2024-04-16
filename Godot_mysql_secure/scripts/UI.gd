@@ -3,9 +3,8 @@ extends Control
 func scoreVisible(i):
 	if i:
 		$Score.visible = true
-		
 	else:
-		$Score.visible = false
+		$Score.visible = true
 
 func setScore(score):
 	$Score.text = "Score: " + str(score)

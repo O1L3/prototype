@@ -2,6 +2,7 @@ extends Area2D
 var damage = 20
 var scorePlus = 10
 onready var healthbar = $healthBar
+onready var shootTime = $Timer
 var health = 40
 
 var speed = 150
@@ -17,7 +18,7 @@ var targetX : float = position.x + moveDist
 
 var rng = RandomNumberGenerator.new()
 var randomNum = rng.randf_range(0.0,1.0)
-var ranomChance = 0.9
+var ranomChance = 0.25
 
 onready var level := get_tree().root.get_node("Level")
 
@@ -77,6 +78,9 @@ func shoot():
 	get_parent().add_child(bullet)
 	bullet.position = $Position2D.global_position
 
+func shootTime(input):
+	shootTime.wait_time = input
+	
 func dead():
 	level.scoreUpdate(scorePlus)
 	level.enemyDead()

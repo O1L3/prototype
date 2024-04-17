@@ -3,6 +3,8 @@ extends CanvasLayer
 var rng = RandomNumberGenerator.new()
 var randomNum = rng.randf_range(0.0,2.0)
 
+var bought = false
+
 func _ready():
 	$UI/scorebox.visible = false
 
@@ -10,6 +12,7 @@ func buyLoot():
 	colorState.spaceBucks -= 100
 	if colorState.pinkUnlocked and colorState.greenUnlocked:
 		colorState.spaceBucks += 100
+		$AllBought.visible = true
 	elif colorState.pinkUnlocked:
 		reward("Green")
 	elif colorState.greenUnlocked:
@@ -22,22 +25,43 @@ func buyLoot():
 			reward("Pink")
 
 func reward(color):
+	$Timer.start()
+	bought = true
+	$LootboxSprite.visible = false
+	$Lootbox.visible = false
 	colorState.skinUnlocked(color)
 	if color == "Green":
 		$Green.visible = true
+		$GreenBought.visible = true
 	else:
 		$Green.visible = false
+		$GreenBought.visible = false
 	if color == "Pink":
 		$Pink.visible = true
+		$PinkBought.visible = true
 	else:
 		$Pink.visible = false
+		$PinkBought.visible = false
 
 func _on_TextureButton_pressed():
-	if colorState.spaceBucks >= 100:
-		buyLoot()
-	else:
-		print("You don't have enough money")
+	if bought == false:
+		if colorState.spaceBucks >= 100:
+			buyLoot()
+		else:
+			$NotEnough.visible = true
 
 
 func _on_Back_pressed():
 	get_tree().change_scene("res://scenes/HomeScreen.tscn")
+
+
+
+
+func _on_Timer_timeout():
+	bought = false
+	$Pink.visible = false
+	$PinkBought.visible = false
+	$Green.visible = false
+	$GreenBought.visible = false
+	$LootboxSprite.visible = true
+	$Lootbox.visible = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scripts/ColorSelecterScreen.gd" type="Script" id=1]
 [ext_resource path="res://graphic/P1.png" type="Texture" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://graphic/BackgroundShip.png" type="Texture" id=15]
 [ext_resource path="res://graphic/SkinText.png" type="Texture" id=16]
 [ext_resource path="res://graphic/Lock.png" type="Texture" id=17]
+[ext_resource path="res://font/ArcadeClassic.tres" type="DynamicFont" id=18]
 
 [node name="ColorSelecterScreen" type="Node2D"]
 script = ExtResource( 1 )
@@ -183,6 +184,17 @@ texture = ExtResource( 17 )
 visible = false
 position = Vector2( 600, 600 )
 texture = ExtResource( 17 )
+
+[node name="PleaseChoose" type="Label" parent="."]
+visible = false
+margin_left = 24.0
+margin_top = 32.0
+margin_right = 363.0
+margin_bottom = 49.0
+rect_scale = Vector2( 1.9, 1.9 )
+custom_fonts/font = ExtResource( 18 )
+text = "Please  choose  a  skin  before  pressing  play"
+align = 1
 
 [connection signal="pressed" from="Start" to="." method="_on_TextureButton_pressed"]
 [connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]

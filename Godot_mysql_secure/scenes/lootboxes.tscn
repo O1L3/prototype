@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/lootboxes.gd" type="Script" id=1]
 [ext_resource path="res://scenes/UI.tscn" type="PackedScene" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://graphic/ButtonBuyHover.png" type="Texture" id=9]
 [ext_resource path="res://graphic/BackButtonPressed.png" type="Texture" id=10]
 [ext_resource path="res://graphic/BackgroundMenu.png" type="Texture" id=11]
+[ext_resource path="res://font/ArcadeClassic.tres" type="DynamicFont" id=12]
+[ext_resource path="res://graphic/lootbox.png" type="Texture" id=13]
 
 [node name="lootboxes" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -53,5 +55,66 @@ texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 10 )
 texture_hover = ExtResource( 7 )
 
+[node name="Lootbox" type="Label" parent="."]
+margin_left = 152.0
+margin_top = 168.0
+margin_right = 402.0
+margin_bottom = 188.0
+rect_scale = Vector2( 1.5, 1.5 )
+custom_fonts/font = ExtResource( 12 )
+text = "Buy  Lootbox  for  100  Space-Bucks"
+align = 1
+
+[node name="LootboxSprite" type="Sprite" parent="."]
+position = Vector2( 344, 288 )
+texture = ExtResource( 13 )
+
+[node name="NotEnough" type="Label" parent="."]
+visible = false
+margin_left = 144.0
+margin_top = 384.0
+margin_right = 403.0
+margin_bottom = 401.0
+rect_scale = Vector2( 1.5, 1.5 )
+custom_fonts/font = ExtResource( 12 )
+text = "You  dont  have  enough  spacebucks"
+
+[node name="GreenBought" type="Label" parent="."]
+visible = false
+margin_left = 144.0
+margin_top = 384.0
+margin_right = 403.0
+margin_bottom = 401.0
+rect_scale = Vector2( 1.5, 1.5 )
+custom_fonts/font = ExtResource( 12 )
+text = "You  Got  The  Green  Spaceship"
+align = 1
+
+[node name="PinkBought" type="Label" parent="."]
+visible = false
+margin_left = 144.0
+margin_top = 384.0
+margin_right = 403.0
+margin_bottom = 401.0
+rect_scale = Vector2( 1.5, 1.5 )
+custom_fonts/font = ExtResource( 12 )
+text = "You  Got  The  Pink  Spaceship"
+align = 1
+
+[node name="AllBought" type="Label" parent="."]
+visible = false
+margin_left = 120.0
+margin_top = 384.0
+margin_right = 414.0
+margin_bottom = 401.0
+rect_scale = Vector2( 1.5, 1.5 )
+custom_fonts/font = ExtResource( 12 )
+text = "You  Own  All  Prices  From  This  Lootbox"
+align = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+
 [connection signal="pressed" from="Buy" to="." method="_on_TextureButton_pressed"]
 [connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -1,16 +1,43 @@
 extends CanvasLayer
 
+var rng = RandomNumberGenerator.new()
+var randomNum = rng.randf_range(0.0,2.0)
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$UI/scorebox.visible = false
+
+func buyLoot():
+	colorState.spaceBucks -= 100
+	if colorState.pinkUnlocked and colorState.greenUnlocked:
+		colorState.spaceBucks += 100
+	elif colorState.pinkUnlocked:
+		reward("Green")
+	elif colorState.greenUnlocked:
+		reward("Pink")
+	else:
+		rng.randomize()
+		if randomNum >1:
+			reward("Green")
+		elif randomNum <=1:
+			reward("Pink")
+
+func reward(color):
+	colorState.skinUnlocked(color)
+	if color == "Green":
+		$Green.visible = true
+	else:
+		$Green.visible = false
+	if color == "Pink":
+		$Pink.visible = true
+	else:
+		$Pink.visible = false
+
+func _on_TextureButton_pressed():
+	if colorState.spaceBucks >= 100:
+		buyLoot()
+	else:
+		print("You don't have enough money")
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _on_Back_pressed():
+	get_tree().change_scene("res://scenes/HomeScreen.tscn")

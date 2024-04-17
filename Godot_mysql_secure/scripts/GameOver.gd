@@ -4,6 +4,7 @@ extends CanvasLayer
 
 func _ready():
 	$Control._add_score()
+	$UI/scorebox.visible = false
 
 func _on_Retry_pressed():
 	get_tree().change_scene("res://scenes/ColorSelecterScreen.tscn")

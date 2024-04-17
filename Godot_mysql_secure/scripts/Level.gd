@@ -76,6 +76,7 @@ func _process(delta):
 			waitWave1 = [3.0, 3.0]
 
 func saveScore():
+	colorState.spaceBucksUpdate(score)
 	if score > colorState.highscore:
 		colorState.highscoreUpdate(score)
 

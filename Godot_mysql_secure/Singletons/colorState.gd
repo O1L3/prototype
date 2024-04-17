@@ -2,19 +2,27 @@ extends Node
 
 var color1 
 var color2
+var greenUnlocked = false
+var pinkUnlocked = false
 
-var spaceBucks = 0
+var spaceBucks = 400
 
 var highscore = 0
 
 var playerName = ""
 
+func skinUnlocked(color):
+	if color == "Green":
+		greenUnlocked = true
+	if color == "Pink":
+		pinkUnlocked = true
+
 func highscoreUpdate(score):
 	if score > highscore:
 		highscore = score
 
-func spaceBucksUpdate(bucks):
-	spaceBucks += bucks
+func spaceBucksUpdate(currentScore):
+	spaceBucks += currentScore/10
 
 func playerNameUpdate(Name):
 	playerName=Name

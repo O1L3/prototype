@@ -13,3 +13,4 @@ func setScore(score):
 
 func _process(delta):
 	$Highscore.text = "Highscore: " + str(colorState.highscore)
+	$Currency.text = "Space-Bucks: " + str(colorState.spaceBucks)

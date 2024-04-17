@@ -19,7 +19,9 @@ func _ready():
 	healthbar.max_value = health
 	$healthBar.visible = false
 	$healthBarBorder.visible = false
-	$Timer2.start()
+	$Timer.start()
+	$LaserTimer.start()
+	$LaserAnim.start()
 
 
 func _process(delta):
@@ -98,9 +100,3 @@ func _on_LaserAnim_timeout():
 func _on_AnimatedSprite_animation_finished():
 	shooting = false
 	animation()
-
-
-func _on_Timer2_timeout():
-	$Timer.start()
-	$LaserTimer.start()
-	$LaserAnim.start()

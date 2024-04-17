@@ -8,7 +8,7 @@ func _on_TextureButton_pressed():
 	get_tree().change_scene("res://scenes/ColorSelecterScreen.tscn")
 
 func _on_Shop_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene("res://scenes/lootboxes.tscn")
 
 
 func _on_Quit_pressed():
